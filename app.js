@@ -23,8 +23,8 @@ const GAMES_DATABASE = [
     description: "Run and dodge obstacles across high-altitude mountain trails. Ride ziplines and collect coins in this endless runner built with Godot.",
     category: "platformer",
     players: "1 Player",
-    path: "MountainRunner/MountainRunner.html",
-    thumbnail: "MountainRunner/mountain_runner_cover.png",
+    path: "mountain_runner/runner.html",
+    thumbnail: "mountain_runner/mountain_runner_cover.png",
     featured: false
   }
 ];
@@ -35,14 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("searchInput");
   const filterButtons = document.querySelectorAll(".category-filters .arcade-btn");
   const activeCountEl = document.getElementById("activeCount");
-  
+
   // Modal DOM Elements
   const modalOverlay = document.getElementById("modalOverlay");
   const gameIframe = document.getElementById("gameIframe");
   const cabinetTitle = document.getElementById("cabinetTitle");
   const cabinetLoading = document.getElementById("cabinetLoading");
   const btnCloseModal = document.getElementById("btnCloseModal");
-  
+
   let currentCategory = "all";
   let searchQuery = "";
   let lastFocusedElement = null;
@@ -55,13 +55,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- RENDER GAME CARDS ---
   function renderGames() {
     gameGrid.innerHTML = "";
-    
+
     // Filter database
     const filteredGames = GAMES_DATABASE.filter(game => {
       const matchesCategory = currentCategory === "all" || game.category === currentCategory;
-      const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                            game.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            game.category.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSearch = game.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        game.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        game.category.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesSearch;
     });
 
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
     filteredGames.forEach(game => {
       const card = document.createElement("article");
       card.className = "game-card";
-      
+
       card.innerHTML = `
         <div class="game-thumbnail-wrapper">
           <img src="${game.thumbnail}" alt="${game.title}" class="game-thumbnail" loading="lazy">
@@ -112,18 +112,18 @@ document.addEventListener("DOMContentLoaded", () => {
   function launchGame(gameId) {
     const game = GAMES_DATABASE.find(g => g.id === gameId);
     if (!game) return;
-    
+
     // Set UI elements
     if (cabinetTitle) {
       cabinetTitle.textContent = game.title;
     }
     cabinetLoading.classList.remove("hidden");
     gameIframe.removeAttribute("src"); // Clear first to ensure fresh reload
-    
+
     // Open modal container
     modalOverlay.classList.add("active");
     modalOverlay.setAttribute("aria-hidden", "false");
-    
+
     // Set iframe path and show
     setTimeout(() => {
       gameIframe.src = game.path;
@@ -142,10 +142,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function closeModal() {
     modalOverlay.classList.remove("active");
     modalOverlay.setAttribute("aria-hidden", "true");
-    
+
     // Stop the game entirely by removing src
-    gameIframe.src = "about:blank"; 
-    
+    gameIframe.src = "about:blank";
+
     // Return focus
     if (lastFocusedElement) {
       lastFocusedElement.focus();
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Keep focus within modal when active (Focus Trap)
   modalOverlay.addEventListener("keydown", (e) => {
     if (!modalOverlay.classList.contains("active")) return;
-    
+
     const focusables = modalOverlay.querySelectorAll("button, iframe");
     const firstFocusable = focusables[0];
     const lastFocusable = focusables[focusables.length - 1];
@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Toggle active states
       filterButtons.forEach(b => b.classList.remove("active"));
       e.currentTarget.classList.add("active");
-      
+
       currentCategory = e.currentTarget.getAttribute("data-category");
       renderGames();
     });
