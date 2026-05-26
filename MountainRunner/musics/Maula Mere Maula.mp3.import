@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://r3gnmtct0ugl"
+path="res://.godot/imported/Maula Mere Maula.mp3-09fb12a7b57bd28afbfce94e07b6d016.mp3str"
+
+[deps]
+
+source_file="res://musics/Maula Mere Maula.mp3"
+dest_files=["res://.godot/imported/Maula Mere Maula.mp3-09fb12a7b57bd28afbfce94e07b6d016.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Play custom Godot and web-based games directly in your browser. A clean, simple hub for game creators and players.">
+  <meta name="author" content="Game Hub Developer">
+  <title>Browser Game Hub</title>
+  
+  <!-- Clean Favicon -->
+  <link rel="icon" type="image/png" href="Rick crash/rikcrash.icon.png">
+  
+  <!-- Clean Inter Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <h1>Browser Game Hub</h1>
+      <p class="subtitle">Play Godot games directly in your web browser. No downloads or installations needed.</p>
+    </header>
+
+    <!-- Status Bar -->
+    <section class="arcade-status-bar" aria-label="System status">
+      <div class="live-stats">
+        Active games: <span id="activeCount">2</span>
+      </div>
+    </section>
+
+    <!-- Search and Filters -->
+    <section class="control-panel" aria-label="Search and filter controls">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search games..." aria-label="Search games by title, description or category">
+      </div>
+      
+      <div class="category-filters">
+        <span class="filter-label">Filter by category:</span>
+        <button class="arcade-btn active" data-category="all">All</button>
+        <button class="arcade-btn" data-category="racing">Racing</button>
+        <button class="arcade-btn" data-category="platformer">Platformer</button>
+      </div>
+    </section>
+
+    <!-- Dynamic Grid of Game Cards -->
+    <main class="game-grid" id="gameGrid" aria-label="Available games">
+      <!-- Game cards will be injected here via app.js -->
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2026 Game Hub. Built for browser play.</p>
+    </footer>
+  </div>
+
+  <!-- Game Play Modal Overlay -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="cabinetTitle">
+    <div class="arcade-cabinet-container">
+      
+      <!-- Modal Close Button -->
+      <div class="cabinet-header">
+        <button class="cabinet-btn" id="btnCloseModal" title="Close" aria-label="Close game overlay">❌</button>
+      </div>
+
+      <!-- Play Screen Iframe -->
+      <div class="cabinet-screen-wrapper">
+        <div class="cabinet-loading" id="cabinetLoading">
+          <div class="loader-spinner"></div>
+          <div class="loader-text">Loading game...</div>
+        </div>
+        <iframe src="about:blank" id="gameIframe" class="game-iframe" allow="autoplay; fullscreen; gamepad" tabindex="0"></iframe>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Main Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

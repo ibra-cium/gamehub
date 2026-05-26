@@ -1,0 +1,383 @@
+[gd_scene format=3 uid="uid://cx6y8aaav8e3b"]
+
+[ext_resource type="Script" uid="uid://cltlnd8ylghwk" path="res://Main.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://c6y8aaav8e3b" path="res://Player.tscn" id="2_player"]
+[ext_resource type="Texture2D" uid="uid://pj4gsrhrdbgo" path="res://assets/sky.png" id="3_sky"]
+[ext_resource type="Texture2D" uid="uid://crxwsva3dhowt" path="res://assets/mountain_back.png" id="4_mtn_back"]
+[ext_resource type="Texture2D" uid="uid://q03kfgvw4erh" path="res://assets/mountain_mid.png" id="5_mtn_mid"]
+[ext_resource type="Texture2D" uid="uid://o52b47bjwc2c" path="res://assets/mountain_front.png" id="6_mtn_front"]
+[ext_resource type="Texture2D" uid="uid://bmusqn3frtuar" path="res://assets/ground.png" id="7_ground"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(1152, 10)
+
+[sub_resource type="LabelSettings" id="LabelSettings_score"]
+font_size = 28
+font_color = Color(0.2, 0.25, 0.3, 1)
+outline_size = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_powerup"]
+font_size = 22
+font_color = Color(0.1, 0.6, 0.9, 1)
+outline_size = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_psych"]
+font_size = 26
+font_color = Color(0.9, 0.2, 0.2, 1)
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font_size = 64
+font_color = Color(0.15, 0.2, 0.25, 1)
+outline_size = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_info"]
+font_size = 24
+font_color = Color(0.3, 0.35, 0.4, 1)
+outline_size = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_gameover"]
+font_size = 64
+font_color = Color(0.8, 0.25, 0.25, 1)
+outline_size = 12
+
+[node name="Main" type="Node2D" unique_id=1578515649]
+script = ExtResource("1_script")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1043971777]
+position = Vector2(576, 324)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=846591169]
+
+[node name="Sky" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1991747746]
+motion_scale = Vector2(0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Sky" unique_id=700728756]
+texture = ExtResource("3_sky")
+centered = false
+
+[node name="MtnBack" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1395343784]
+motion_scale = Vector2(0.1, 1)
+motion_mirroring = Vector2(1152, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/MtnBack" unique_id=1045004318]
+position = Vector2(0, 240)
+texture = ExtResource("4_mtn_back")
+centered = false
+
+[node name="MtnMid" type="ParallaxLayer" parent="ParallaxBackground" unique_id=420320456]
+motion_scale = Vector2(0.25, 1)
+motion_mirroring = Vector2(1152, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/MtnMid" unique_id=1958508782]
+position = Vector2(0, 260)
+texture = ExtResource("5_mtn_mid")
+centered = false
+
+[node name="MtnFront" type="ParallaxLayer" parent="ParallaxBackground" unique_id=76917303]
+motion_scale = Vector2(0.5, 1)
+motion_mirroring = Vector2(1152, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/MtnFront" unique_id=1907536229]
+position = Vector2(0, 280)
+texture = ExtResource("6_mtn_front")
+centered = false
+
+[node name="Ground" type="ParallaxLayer" parent="ParallaxBackground" unique_id=370250320]
+motion_mirroring = Vector2(1152, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Ground" unique_id=434803779]
+position = Vector2(0, 520)
+texture = ExtResource("7_ground")
+centered = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1102334952]
+position = Vector2(576, 525)
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1241204288]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="Player" parent="." unique_id=476677229 instance=ExtResource("2_player")]
+position = Vector2(150, 450)
+
+[node name="RainParticles" type="CPUParticles2D" parent="." unique_id=216053241]
+position = Vector2(576, -50)
+amount = 120
+lifetime = 2.0
+preprocess = 2.0
+emission_shape = 3
+emission_rect_extents = Vector2(600, 1)
+direction = Vector2(-0.5, 1)
+spread = 5.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 500.0
+initial_velocity_max = 800.0
+scale_amount_max = 3.0
+color = Color(0.45, 0.6, 0.8, 0.4)
+
+[node name="SpawnTimer" type="Timer" parent="." unique_id=180604982]
+one_shot = true
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=280174988]
+
+[node name="HUD" type="Control" parent="UI" unique_id=2075072684]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScoreLabel" type="Label" parent="UI/HUD" unique_id=139151754]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 300.0
+offset_bottom = 70.0
+text = "SCORE: 0 m"
+label_settings = SubResource("LabelSettings_score")
+
+[node name="CoinsLabel" type="Label" parent="UI/HUD" unique_id=1264369681]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 80.0
+offset_right = 300.0
+offset_bottom = 118.0
+text = "COINS: 0"
+label_settings = SubResource("LabelSettings_score")
+
+[node name="GemsLabel" type="Label" parent="UI/HUD" unique_id=1096877744]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 128.0
+offset_right = 300.0
+offset_bottom = 166.0
+text = "GEMS: 0"
+label_settings = SubResource("LabelSettings_score")
+
+[node name="ShieldStatusLabel" type="Label" parent="UI/HUD" unique_id=431695353]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 180.0
+offset_right = 300.0
+offset_bottom = 212.0
+text = "SHIELD: INACTIVE"
+label_settings = SubResource("LabelSettings_powerup")
+
+[node name="MagnetStatusLabel" type="Label" parent="UI/HUD" unique_id=1211381383]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 220.0
+offset_right = 300.0
+offset_bottom = 252.0
+text = "MAGNET: INACTIVE"
+label_settings = SubResource("LabelSettings_powerup")
+
+[node name="HighScoreLabel" type="Label" parent="UI/HUD" unique_id=364243997]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -332.0
+offset_top = 32.0
+offset_right = -32.0
+offset_bottom = 70.0
+grow_horizontal = 0
+text = "HIGH SCORE: 0 m"
+label_settings = SubResource("LabelSettings_score")
+horizontal_alignment = 2
+
+[node name="PsychLabel" type="Label" parent="UI/HUD" unique_id=523273743]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -400.0
+offset_top = 36.0
+offset_right = 400.0
+offset_bottom = 76.0
+grow_horizontal = 2
+text = "Why are you running?"
+label_settings = SubResource("LabelSettings_psych")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartScreen" type="Control" parent="UI" unique_id=59076019]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/StartScreen" unique_id=1263591860]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.12, 0.15, 0.6)
+
+[node name="TitleLabel" type="Label" parent="UI/StartScreen" unique_id=822531958]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -450.0
+offset_top = -180.0
+offset_right = 450.0
+offset_bottom = -80.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "MOUNTAIN GLITCH RUNNER"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InstructionsLabel" type="Label" parent="UI/StartScreen" unique_id=881587402]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -60.0
+offset_right = 400.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Controls:
+SPACE / UP / W to JUMP & DOUBLE JUMP
+DOWN / S to SLIDE
+Grab magnets and shields to survive the simulation."
+label_settings = SubResource("LabelSettings_info")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartHighScoreLabel" type="Label" parent="UI/StartScreen" unique_id=245273060]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = 70.0
+offset_right = 300.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "HIGH SCORE: 0 m"
+label_settings = SubResource("LabelSettings_score")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartButton" type="Button" parent="UI/StartScreen" unique_id=2111926253]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = 130.0
+offset_right = 150.0
+offset_bottom = 190.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 28
+text = "ENTER THE VOID"
+
+[node name="GameOverScreen" type="Control" parent="UI" unique_id=137074886]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/GameOverScreen" unique_id=961729221]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.2, 0.05, 0.05, 0.7)
+
+[node name="GameOverLabel" type="Label" parent="UI/GameOverScreen" unique_id=1031744264]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "YOU CRASHED"
+label_settings = SubResource("LabelSettings_gameover")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FinalScoreLabel" type="Label" parent="UI/GameOverScreen" unique_id=53500451]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -80.0
+offset_right = 400.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Your reality collapsed.
+SCORE: 0 m
+HIGH SCORE: 0 m"
+label_settings = SubResource("LabelSettings_info")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RespawnButton" type="Button" parent="UI/GameOverScreen" unique_id=681811373]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = 100.0
+offset_right = 220.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "RESPAWN (Costs 1 Gem)"
+
+[node name="RestartButton" type="Button" parent="UI/GameOverScreen" unique_id=782801071]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = 180.0
+offset_right = 150.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 28
+text = "RETRY LIFE"

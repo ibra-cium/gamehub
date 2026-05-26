@@ -1,0 +1,11 @@
+# Godot cache and import files
+.godot/
+**/.godot/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Build and export files (optional, but keep the HTML5 builds since they are played in the hub)
+# MountainRunner/exports.zip
